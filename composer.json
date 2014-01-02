@@ -1,6 +1,7 @@
 {
     "name": "nwidart/db-exporter",
-    "description": "",
+    "description": "Export your database as a Laravel Migration",
+    "keywords": ["Export", "PHP", "Database", "Migrations", "Laravel"],
     "authors": [
         {
             "name": "Nicolas Widart",
