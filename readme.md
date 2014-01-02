@@ -48,9 +48,11 @@ Route::get('export', function()
 
 
 ## TODO
-* Export data too.
+* Export data too. It would be cool if it could also generate a seed file based of the data in the tables. This would be more usefull to run on the production server to get the seed on the development server.
 
 
+## Credits
+Credits to **@michaeljcalkins** for the [original class](http://paste.laravel.com/1jdw#4) on paste.laravel.com. Sadly I couldn't get it working as-is, so I debugged it and decided to make a package out of it.
 
 ## License (MIT)
 
