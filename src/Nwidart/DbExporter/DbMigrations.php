@@ -41,7 +41,8 @@ class DbMigrations
     {
         $schema = $this->compileSchema();
         $filename = date('Y_m_d_His') . "_create_" . $this->database . "_database.php";
-        file_put_contents("./app/database/migrations/{$filename}", $schema);
+
+        file_put_contents(app_path() . "/database/migrations/{$filename}", $schema);
     }
 
     public function convert()
