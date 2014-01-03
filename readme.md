@@ -4,14 +4,14 @@ Export your database as a Laravel Migration
 
 ## Installation
 
-Add `"nwidart/db-exporter"` as a requirement to `composer.json`:
+Add `"nwidart/db-exporter"`* as a requirement to `composer.json`:
 
 ```
 {
     ...
     "require": {
         ...
-		"nwidart/db-exporter": "dev-master"
+		"nwidart/db-exporter": "v0.3"
     },
 }
 
@@ -29,6 +29,7 @@ Add the service provider to `app/config/app.php`:
 'Nwidart\DbExporter\DbMigrationsServiceProvider'
 ```
 
+**Use `dev-master` as version requirement to be on the cutting edge*
 
 
 ## Usage
