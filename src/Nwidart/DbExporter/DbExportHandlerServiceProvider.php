@@ -34,8 +34,11 @@ class DbExportHandlerServiceProvider extends ServiceProvider
             // Instatiate a new DbMigrations class to send to the handler
             $migrator = new DbMigrations($database['database']);
 
+            // Instatiate a new DbSeeding class to send to the handler
+            $seeder = new DbSeeding($database['database']);
+
             // Return the ExportHandler
-            return new DbExportHandler($migrator);
+            return new DbExportHandler($migrator, $seeder);
         });
 
         $this->app->booting(function()

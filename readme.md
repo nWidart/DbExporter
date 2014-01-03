@@ -33,8 +33,9 @@ Add the service provider to `app/config/app.php`:
 
 ## Usage
 
+### Database to migration
 
-### Export current database
+#### Export current database
 **This requires your database config file to be updated.** The class will export the database name from your `app/config/database.php` file, based on your 'default' option.
 
 
@@ -47,7 +48,7 @@ Route::get('export', function()
 });
 ```
 
-### Export a custom database
+#### Export a custom database
 
 ```
 Route::get('export', function()
@@ -55,6 +56,28 @@ Route::get('export', function()
     DbExportHandler::migrate('otherDatabaseName');
 });
 ```
+
+### Database to seed
+
+**This is still in testing phase. Use with care.**
+
+This will write a seeder class with all the data of the current database.
+
+```
+Route::get('exportSeed', function()
+{
+    DbExportHandler::seed();
+});
+```
+Next all you have to do is add the call method on the base seed class:
+```
+$this->call('nameOfYourSeedClass');
+```
+
+Now you can run from the commmand line:
+
+* run `php artisan db:seed`,
+* or, without having to add the call method: run `php artisan db:seed --class=nameOfYourSeedClass`
 
 
 

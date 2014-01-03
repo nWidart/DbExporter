@@ -16,14 +16,20 @@ class DbExportHandler
      * @var DbMigrations
      */
     protected $migrator;
+    /**
+     * @var DbSeeding
+     */
+    protected $seeder;
 
     /**
      * Inject the DbMigrations class
      * @param DbMigrations $DbMigrations
+     * @param DbSeeding $DbSeeding
      */
-    function __construct(DbMigrations $DbMigrations)
+    function __construct(DbMigrations $DbMigrations, DbSeeding $DbSeeding)
     {
         $this->migrator = $DbMigrations;
+        $this->seeder = $DbSeeding;
     }
 
     /**
@@ -40,6 +46,7 @@ class DbExportHandler
      */
     public function seed($database = null)
     {
-        // Todo add seeding stuff
+        $this->seeder->convert($database)->write();
+
     }
 }
