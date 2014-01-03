@@ -14,10 +14,19 @@ use DB, Str, File;
 
 class DbSeeding extends DbExporter
 {
+    /**
+     * @var String
+     */
     protected $database;
 
+    /**
+     * @var String
+     */
     protected $seedingStub;
 
+    /**
+     * @var bool
+     */
     protected $customDb = false;
 
     /**
@@ -29,6 +38,9 @@ class DbSeeding extends DbExporter
         $this->database = $database;
     }
 
+    /**
+     * Write the seed file
+     */
     public function write()
     {
         // Check if convert method was called before
@@ -44,6 +56,11 @@ class DbSeeding extends DbExporter
         file_put_contents(app_path() . "/database/seeds/{$filename}.php", $seed);
     }
 
+    /**
+     * Convert the database tables to something usefull
+     * @param null $database
+     * @return $this
+     */
     public function convert($database = null)
     {
         if (!is_null($database)) {
@@ -101,11 +118,10 @@ class DbSeeding extends DbExporter
         return $this;
     }
 
-    protected function getTableData($table)
-    {
-        return DB::table($table)->get();
-    }
-
+    /**
+     * Compile the current seedingStub with the seed template
+     * @return mixed
+     */
     protected function compile()
     {
         // Grab the template

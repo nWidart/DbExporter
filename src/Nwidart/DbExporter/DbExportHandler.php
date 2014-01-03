@@ -10,12 +10,13 @@
 
 namespace Nwidart\DbExporter;
 
-class DbExportHandler extends DbExporter
+class DbExportHandler
 {
     /**
      * @var DbMigrations
      */
     protected $migrator;
+
     /**
      * @var DbSeeding
      */
@@ -55,6 +56,11 @@ class DbExportHandler extends DbExporter
         return $this;
     }
 
+    /**
+     * Helper function to generate the migration and the seed in one command
+     * @param null $database
+     * @return $this
+     */
     public function migrateAndSeed($database = null)
     {
         // Run the migrator generator
@@ -73,8 +79,9 @@ class DbExportHandler extends DbExporter
      */
     public function ignore($tables)
     {
-        self::$ignore = array_merge(self::$ignore, (array)$tables);
-/**/
+        DbExporter::$ignore = array_merge(DbExporter::$ignore, (array)$tables);
+
         return $this;
     }
+
 }

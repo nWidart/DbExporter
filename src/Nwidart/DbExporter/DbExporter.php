@@ -14,7 +14,11 @@ use DB;
 
 abstract class DbExporter
 {
-    protected static $ignore = array('migrations');
+    /**
+     * Contains the ignore tables
+     * @var array $ignore
+     */
+    public static $ignore = array('migrations');
 
     /**
      * Get all the tables
@@ -38,4 +42,33 @@ abstract class DbExporter
             ->where('table_name', '=', $table)
             ->get($this->selects);
     }
+
+    /**
+     * Grab all the table data
+     * @param $table
+     * @return mixed
+     */
+    protected function getTableData($table)
+    {
+        return DB::table($table)->get();
+    }
+
+    /**
+     * Write the file
+     * @return mixed
+     */
+    abstract public function write();
+
+    /**
+     * Convert the database to a usefull format
+     * @param null $database
+     * @return mixed
+     */
+    abstract public function convert($database = null);
+
+    /**
+     * Put the converted stub into a template
+     * @return mixed
+     */
+    abstract protected function compile();
 }

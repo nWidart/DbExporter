@@ -28,9 +28,6 @@ class DbMigrations extends DbExporter
 
     protected $schema;
 
-    protected $up;
-    protected $down;
-
     protected $customDb = false;
 
     /**
@@ -150,7 +147,7 @@ class DbMigrations extends DbExporter
      * TODO use a template with seacrh&replace
      * @return string
      */
-    private function compile()
+    protected function compile()
     {
         $upSchema = "";
         $downSchema = "";
