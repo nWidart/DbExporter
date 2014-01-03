@@ -33,11 +33,18 @@ class DbMigrations
     protected $down;
     protected $customDb = false;
 
+    /**
+     * Set the database name
+     * @param String $database
+     */
     function __construct($database)
     {
-        $this->database = $database['database'];
+        $this->database = $database;
     }
 
+    /**
+     * Write the prepared migration to a file
+     */
     public function write()
     {
         // Check if convert method was called before
@@ -52,12 +59,19 @@ class DbMigrations
         file_put_contents(app_path() . "/database/migrations/{$filename}", $schema);
     }
 
+    /**
+     * Convert the database to migrations
+     * If none is given, use de DB from condig/database.php
+     * @param null $database
+     * @return $this
+     */
     public function convert($database = null)
     {
         if (!is_null($database)) {
             $this->database = $database;
             $this->customDb = true;
         }
+
         $table_headers = array('Field', 'Type', 'Null', 'Key', 'Default', 'Extra');
         $tables = $this->getTables();
 
@@ -126,9 +140,9 @@ class DbMigrations
                     $method = 'increments';
                 }
 
-                $up .= "            $" . "table->{$method}('{$values->Field}'{$numbers}){$nullable}{$default}{$unsigned};\n";
+                $up .= "                $" . "table->{$method}('{$values->Field}'{$numbers}){$nullable}{$default}{$unsigned};\n";
             }
-            $up .= "        });\n\n";
+            $up .= "            });\n\n";
 
             $this->schema[$value['table_name']] = array(
                 'up'   => $up,
@@ -139,12 +153,21 @@ class DbMigrations
         return $this;
     }
 
+    /**
+     * Get all the tables
+     * @return mixed
+     */
     protected function getTables()
     {
         $pdo = DB::connection()->getPdo();
         return $pdo->query('SELECT table_name FROM information_schema.tables WHERE table_schema="' . $this->database . '"');
     }
 
+    /**
+     * Get all the columns for a given table
+     * @param $table
+     * @return mixed
+     */
     protected function getTableDescribes($table)
     {
         return DB::table('information_schema.columns')
@@ -153,6 +176,11 @@ class DbMigrations
             ->get($this->selects);
     }
 
+    /**
+     * Compile the migration into the base migration file
+     * TODO use a template with seacrh&replace
+     * @return string
+     */
     private function compileSchema()
     {
         $upSchema = "";
@@ -165,41 +193,25 @@ class DbMigrations
                 continue;
             }
             $upSchema .= "
-//
-// NOTE -- {$name}
-// --------------------------------------------------
-{$values['up']}";
+            //
+            // NOTE -- {$name}
+            // --------------------------------------------------
+            {$values['up']}";
 
             $downSchema .= "
-{$values['down']}";
+            {$values['down']}";
         }
 
-        $schema = "<?php
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+        // Grab the template
+        $template = \File::get(__DIR__ . '/templates/migration.txt');
 
-//
-// NOTE Migration Created: " . date("Y-m-d H:i:s") . "
-// --------------------------------------------------
-class Create_" . \Str::title($this->database) . "_Database extends Migration {
+        // Replace the classname
+        $template = str_replace('{{name}}', "Create_" . \Str::title($this->database) . "_Database", $template);
 
-    //
-    // NOTE - Make changes to the database.
-    // --------------------------------------------------
-    public function up()
-    {
-        " . $upSchema . "
-        " . $this->up . "
-    }
-    //
-    // NOTE - Revert the changes to the database.
-    // --------------------------------------------------
-    public function down()
-    {
-        " . $downSchema . "
-        " . $this->down . "
-    }
-}";
-        return $schema;
+        // Replace the up and down values
+        $template = str_replace('{{up}}', $upSchema, $template);
+        $template = str_replace('{{down}}', $downSchema, $template);
+
+        return $template;
     }
 }

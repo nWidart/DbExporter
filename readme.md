@@ -43,7 +43,7 @@ Make a export route on your development environment
 ```
 Route::get('export', function()
 {
-    DbMigrations::write();
+    DbExportHandler::migrate();
 });
 ```
 
@@ -52,7 +52,7 @@ Route::get('export', function()
 ```
 Route::get('export', function()
 {
-    DbMigrations::convert('otherDatabaseName')->write();
+    DbExportHandler::migrate('otherDatabaseName');
 });
 ```
 
