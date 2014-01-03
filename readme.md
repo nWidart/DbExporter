@@ -79,6 +79,29 @@ Now you can run from the commmand line:
 * `php artisan db:seed`,
 * or, without having to add the call method: `php artisan db:seed --class=nameOfYourSeedClass`
 
+### Chaining
+You can also combine the generation of the migrations & the seed:
+
+```
+DbExportHandler::migrate()->seed();
+```
+Or with:
+
+```
+DbExportHandler::migrateAndSeed();
+```
+**!! Important :** Please note you cannot set a external seed database. 
+If you know of a way to connect to a external DB with laravel without writing in the app/database.php file [let me know](http://www.twitter.com/nicolaswidart).
+
+
+### Ignoring tables
+By default the migrations table is ignored. You can add tabled to ignore with the following syntax:
+
+```
+DbExportHandler::ignore('tableToIgnore')->migrate();
+DbExportHandler::ignore('tableToIgnore')->seed();
+```
+
 
 
 ## TODO

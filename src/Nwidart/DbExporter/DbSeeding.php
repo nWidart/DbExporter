@@ -10,16 +10,15 @@
 
 namespace Nwidart\DbExporter;
 
-use DB, Str;
+use DB, Str, File;
 
-class DbSeeding
+class DbSeeding extends DbExporter
 {
     protected $database;
 
-    protected $ignore = array('migrations');
-
     protected $seedingStub;
-    protected $customDb;
+
+    protected $customDb = false;
 
     /**
      * Set the database name
@@ -40,7 +39,7 @@ class DbSeeding
 
         $seed = $this->compile();
 
-        $filename = \Str::camel($this->database) . "TableSeeder";
+        $filename = Str::camel($this->database) . "TableSeeder";
 
         file_put_contents(app_path() . "/database/seeds/{$filename}.php", $seed);
     }
@@ -52,13 +51,14 @@ class DbSeeding
             $this->customDb = true;
         }
 
+        // Get the tables for the database
         $tables = $this->getTables();
 
         $stub = "";
         // Loop over the tables
         foreach ($tables as $key => $value) {
             // Do not export the ignored tables
-            if (in_array($value['table_name'], $this->ignore)) {
+            if (in_array($value['table_name'], self::$ignore)) {
                 continue;
             }
             $tableName = $value['table_name'];
@@ -105,33 +105,12 @@ class DbSeeding
     {
         return DB::table($table)->get();
     }
-    /**
-     * Get all the tables
-     * @return mixed
-     */
-    protected function getTables()
-    {
-        $pdo = DB::connection()->getPdo();
-        return $pdo->query('SELECT table_name FROM information_schema.tables WHERE table_schema="' . $this->database . '"');
-    }
-
-    /**
-     * Get all the columns for a given table
-     * @param $table
-     * @return mixed
-     */
-    protected function getTableDescribes($table)
-    {
-        return DB::table('information_schema.columns')
-            ->where('table_schema', '=', $this->database)
-            ->where('table_name', '=', $table)
-            ->get();
-    }
 
     protected function compile()
     {
         // Grab the template
-        $template = \File::get(__DIR__ . '/templates/seed.txt');
+        $template = File::get(__DIR__ . '/templates/seed.txt');
+
         // Replace the classname
         $template = str_replace('{{className}}', \Str::camel($this->database) . "TableSeeder", $template);
         $template = str_replace('{{run}}', $this->seedingStub, $template);

@@ -10,14 +10,11 @@
 
 namespace Nwidart\DbExporter;
 
-use Illuminate\Support\Facades\DB;
+use DB, Str, File;
 
-class DbMigrations
+class DbMigrations extends DbExporter
 {
     protected $database;
-
-    // TODO Check the correct migrations table name
-    protected $ignore = array('migrations');
 
     protected $selects = array(
         'column_name as Field',
@@ -28,9 +25,12 @@ class DbMigrations
         'extra as Extra',
         'data_type as Data_Type'
     );
+
     protected $schema;
+
     protected $up;
     protected $down;
+
     protected $customDb = false;
 
     /**
@@ -53,7 +53,7 @@ class DbMigrations
             $this->convert();
         }
 
-        $schema = $this->compileSchema();
+        $schema = $this->compile();
         $filename = date('Y_m_d_His') . "_create_" . $this->database . "_database.php";
 
         file_put_contents(app_path() . "/database/migrations/{$filename}", $schema);
@@ -72,13 +72,12 @@ class DbMigrations
             $this->customDb = true;
         }
 
-        $table_headers = array('Field', 'Type', 'Null', 'Key', 'Default', 'Extra');
         $tables = $this->getTables();
 
         // Loop over the tables
         foreach ($tables as $key => $value) {
             // Do not export the ignored tables
-            if (in_array($value['table_name'], $this->ignore)) {
+            if (in_array($value['table_name'], self::$ignore)) {
                 continue;
             }
 
@@ -100,37 +99,30 @@ class DbMigrations
                     case 'int' :
                         $method = 'integer';
                         break;
-
                     case 'char' :
                     case 'varchar' :
                         $para = strpos($values->Type, '(');
                         $numbers = ", " . substr($values->Type, $para + 1, -1);
                         $method = 'string';
                         break;
-
                     case 'float' :
                         $method = 'float';
                         break;
-
                     case 'decimal' :
                         $para = strpos($values->Type, '(');
                         $numbers = ", " . substr($values->Type, $para + 1, -1);
                         $method = 'decimal';
                         break;
-
                     case 'tinyint' :
                         $method = 'boolean';
                         break;
-
                     case 'timestamp' :
                     case 'datetime' :
                         $method = 'date';
                         break;
-
                     case 'mediumtext' :
                         $method = 'mediumtext';
                         break;
-
                     case 'text' :
                         $method = 'text';
                         break;
@@ -154,48 +146,24 @@ class DbMigrations
     }
 
     /**
-     * Get all the tables
-     * @return mixed
-     */
-    protected function getTables()
-    {
-        $pdo = DB::connection()->getPdo();
-        return $pdo->query('SELECT table_name FROM information_schema.tables WHERE table_schema="' . $this->database . '"');
-    }
-
-    /**
-     * Get all the columns for a given table
-     * @param $table
-     * @return mixed
-     */
-    protected function getTableDescribes($table)
-    {
-        return DB::table('information_schema.columns')
-            ->where('table_schema', '=', $this->database)
-            ->where('table_name', '=', $table)
-            ->get($this->selects);
-    }
-
-    /**
      * Compile the migration into the base migration file
      * TODO use a template with seacrh&replace
      * @return string
      */
-    private function compileSchema()
+    private function compile()
     {
         $upSchema = "";
         $downSchema = "";
-        $newSchema = "";
 
         foreach ($this->schema as $name => $values) {
             // check again for ignored tables
-            if (in_array($name, $this->ignore)) {
+            if (in_array($name, self::$ignore)) {
                 continue;
             }
             $upSchema .= "
-            //
-            // NOTE -- {$name}
-            // --------------------------------------------------
+             /**
+             * Table: {$name}
+             */
             {$values['up']}";
 
             $downSchema .= "
@@ -203,10 +171,10 @@ class DbMigrations
         }
 
         // Grab the template
-        $template = \File::get(__DIR__ . '/templates/migration.txt');
+        $template = File::get(__DIR__ . '/templates/migration.txt');
 
         // Replace the classname
-        $template = str_replace('{{name}}', "Create_" . \Str::title($this->database) . "_Database", $template);
+        $template = str_replace('{{name}}', "Create_" . Str::title($this->database) . "_Database", $template);
 
         // Replace the up and down values
         $template = str_replace('{{up}}', $upSchema, $template);
