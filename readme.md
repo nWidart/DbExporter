@@ -33,6 +33,8 @@ Add the service provider to `app/config/app.php`:
 
 ## Usage
 
+
+### Export current database
 **This requires your database config file to be updated.** The class will export the database name from your `app/config/database.php` file, based on your 'default' option.
 
 
@@ -41,7 +43,16 @@ Make a export route on your development environment
 ```
 Route::get('export', function()
 {
-    DbMigrations::convert()->write();
+    DbMigrations::write();
+});
+```
+
+### Export a custom database
+
+```
+Route::get('export', function()
+{
+    DbMigrations::convert('otherDatabaseName')->write();
 });
 ```
 
@@ -49,6 +60,10 @@ Route::get('export', function()
 
 ## TODO
 * Export data too. It would be cool if it could also generate a seed file based of the data in the tables. This would be more usefull to run on the production server to get the seed on the development server.
+* Deploy the migration directly to the production server ready to be migrated. (as an option)
+* Make commands to do the same thing (export db to migration)
+
+
 
 
 ## Credits
