@@ -76,13 +76,13 @@ $this->call('nameOfYourSeedClass');
 
 Now you can run from the commmand line:
 
-* run `php artisan db:seed`,
-* or, without having to add the call method: run `php artisan db:seed --class=nameOfYourSeedClass`
+* `php artisan db:seed`,
+* or, without having to add the call method: `php artisan db:seed --class=nameOfYourSeedClass`
 
 
 
 ## TODO
-* Export data too. It would be cool if it could also generate a seed file based of the data in the tables. This would be more usefull to run on the production server to get the seed on the development server.
+* ~~Export data too. It would be cool if it could also generate a seed file based of the data in the tables. This would be more usefull to run on the production server to get the seed on the development server.~~ **Done.**
 * Deploy the migration directly to the production server ready to be migrated. (as an option)
 * Make commands to do the same thing (export db to migration)
 
