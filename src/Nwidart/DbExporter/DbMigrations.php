@@ -31,6 +31,7 @@ class DbMigrations
     protected $schema;
     protected $up;
     protected $down;
+    protected $customDb = false;
 
     function __construct($database)
     {
@@ -39,6 +40,12 @@ class DbMigrations
 
     public function write()
     {
+        // Check if convert method was called before
+        // If not, call it on default DB
+        if (!$this->customDb) {
+            $this->convert();
+        }
+
         $schema = $this->compileSchema();
         $filename = date('Y_m_d_His') . "_create_" . $this->database . "_database.php";
 
@@ -49,6 +56,7 @@ class DbMigrations
     {
         if (!is_null($database)) {
             $this->database = $database;
+            $this->customDb = true;
         }
         $table_headers = array('Field', 'Type', 'Null', 'Key', 'Default', 'Extra');
         $tables = $this->getTables();
