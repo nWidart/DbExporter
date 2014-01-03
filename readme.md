@@ -26,7 +26,7 @@ $ php composer.phar update
 Add the service provider to `app/config/app.php`:
 
 ```
-'Nwidart\DbExporter\DbMigrationsServiceProvider'
+'Nwidart\DbExporter\DbExportHandlerServiceProvider'
 ```
 
 **Use `dev-master` as version requirement to be on the cutting edge*
