@@ -45,8 +45,11 @@ class DbMigrations
         file_put_contents(app_path() . "/database/migrations/{$filename}", $schema);
     }
 
-    public function convert()
+    public function convert($database = null)
     {
+        if (!is_null($database)) {
+            $this->database = $database;
+        }
         $table_headers = array('Field', 'Type', 'Null', 'Key', 'Default', 'Extra');
         $tables = $this->getTables();
 
