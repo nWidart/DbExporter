@@ -33,6 +33,8 @@ class DbMigrations extends DbExporter
 
     protected $customDb = false;
 
+    public static $filePath;
+
     /**
      * Set the database name
      * @param String $database
@@ -60,8 +62,11 @@ class DbMigrations extends DbExporter
 
         $schema = $this->compile();
         $filename = date('Y_m_d_His') . "_create_" . $this->database . "_database.php";
+        self::$filePath = "app/database/migrations/{$filename}";
 
         file_put_contents(app_path() . "/database/migrations/{$filename}", $schema);
+
+        return self::$filePath;
     }
 
     /**
@@ -187,4 +192,5 @@ class DbMigrations extends DbExporter
 
         return $template;
     }
+
 }

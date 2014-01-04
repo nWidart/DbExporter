@@ -18,6 +18,20 @@ class DbExportHandlerServiceProvider extends ServiceProvider
 {
     protected $defer = false;
 
+    /**
+     * @var DbMigrations $migrator
+     */
+    protected $migrator;
+
+    /**
+     * @var DbSeeding $seeder
+     */
+    protected $seeder;
+    /**
+     * @var DbExportHandler $handler
+     */
+    protected $handler;
+
     public function boot()
     {
         $this->package('nwidart/db-exporter');
@@ -25,22 +39,102 @@ class DbExportHandlerServiceProvider extends ServiceProvider
 
     public function register()
     {
+        // Load the classes
+        $this->loadClasses();
 
+        // Register the base export handler class
+        $this->registerDbExportHandler();
+
+        // Handle the artisan commands
+        $this->registerCommands();
+
+        // Load the alias
+        $this->loadAlias();
+    }
+
+    /**
+     * Load to classes
+     */
+    protected function loadClasses()
+    {
+        // Instatiate a new DbMigrations class to send to the handler
+        $this->migrator = new DbMigrations($this->getDatabaseName());
+
+        // Instatiate a new DbSeeding class to send to the handler
+        $this->seeder = new DbSeeding($this->getDatabaseName());
+
+        // Instantiate the handler
+        $this->handler = new DbExportHandler($this->migrator, $this->seeder);
+    }
+
+    /**
+     * Get the database name from the app/config/database.php file
+     * @return String
+     */
+    private function getDatabaseName()
+    {
+        $connType = Config::get('database.default');
+        $database = Config::get('database.connections.' .$connType );
+
+        return $database['database'];
+    }
+
+    public function provides()
+    {
+        return array('DbExportHandler');
+    }
+
+    /**
+     * Register the needed commands
+     */
+    public function registerCommands()
+    {
+        $this->registerMigrationsCommand();
+        $this->registerSeedsCommand();
+        $this->commands(
+            'dbe::migrations',
+            'dbe::seeds'
+        );
+    }
+
+    /**
+     * Register the migrations command
+     */
+    protected function registerMigrationsCommand()
+    {
+        $this->app['dbe::migrations'] = $this->app->share(function($app)
+        {
+            return new Commands\MigrationsGeneratorCommand($this->handler);
+        });
+    }
+
+    /**
+     * Register the seeds command
+     */
+    protected function registerSeedsCommand()
+    {
+        $this->app['dbe::seeds'] = $this->app->share(function($app)
+        {
+            return new Commands\SeedGeneratorCommand($this->handler);
+        });
+    }
+
+    /**
+     * Register the Export handler class
+     */
+    protected function registerDbExportHandler()
+    {
         $this->app['DbExportHandler'] = $this->app->share(function($app)
         {
-            $connType = Config::get('database.default');
-            $database = Config::get('database.connections.' .$connType );
-
-            // Instatiate a new DbMigrations class to send to the handler
-            $migrator = new DbMigrations($database['database']);
-
-            // Instatiate a new DbSeeding class to send to the handler
-            $seeder = new DbSeeding($database['database']);
-
-            // Return the ExportHandler
-            return new DbExportHandler($migrator, $seeder);
+            return $this->handler;
         });
+    }
 
+    /**
+     * Load the alias = One less install step for the user
+     */
+    protected function loadAlias()
+    {
         $this->app->booting(function()
         {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
@@ -48,8 +142,4 @@ class DbExportHandlerServiceProvider extends ServiceProvider
         });
     }
 
-    public function provides()
-    {
-        return array('DbExportHandler');
-    }
 }

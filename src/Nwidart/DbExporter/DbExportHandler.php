@@ -84,4 +84,12 @@ class DbExportHandler
         return $this;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getMigrationsFilePath()
+    {
+        return DbMigrations::$filePath;
+    }
+
 }
