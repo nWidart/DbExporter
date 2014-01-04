@@ -11,7 +11,7 @@ Add `"nwidart/db-exporter"`* as a requirement to `composer.json`:
     ...
     "require": {
         ...
-		"nwidart/db-exporter": "v0.3"
+		"nwidart/db-exporter": "0.4"
     },
 }
 
