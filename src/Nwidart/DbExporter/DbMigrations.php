@@ -10,7 +10,10 @@
 
 namespace Nwidart\DbExporter;
 
-use DB, Str, File;
+use DB;
+use File;
+use Nwidart\DbExporter\Exceptions\InvalidDatabaseException;
+use Str;
 
 class DbMigrations extends DbExporter
 {
@@ -33,9 +36,14 @@ class DbMigrations extends DbExporter
     /**
      * Set the database name
      * @param String $database
+     * @throw InvalidDatabaseException
      */
     function __construct($database)
     {
+        if (empty($database)) {
+            throw new InvalidDatabaseException('No database set in app/config/database.php');
+        }
+
         $this->database = $database;
     }
 
