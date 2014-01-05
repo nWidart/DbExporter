@@ -11,7 +11,7 @@ Add `"nwidart/db-exporter"`* as a requirement to `composer.json`:
     ...
     "require": {
         ...
-		"nwidart/db-exporter": "0.4"
+		"nwidart/db-exporter": "0.5"
     },
 }
 
@@ -27,6 +27,12 @@ Add the service provider to `app/config/app.php`:
 
 ```
 'Nwidart\DbExporter\DbExportHandlerServiceProvider'
+```
+
+(Optional) Publish the configuration file.
+
+```
+php artisan config:publish nwidart/db-exporter
 ```
 
 **Use `dev-master` as version requirement to be on the cutting edge*
@@ -67,6 +73,30 @@ php artisan dbe:seeds
 *Important: This **requires your database config file to be updated in `app/config/database.php`**.*
 
 
+#### Uploading migrations/seeds to remote server
+**!! Important** *This requires your app/config/remote.php to be configured. *
+
+**!! Important** *The package configuration **remote** key needs to be configured to correspond to your remotes directory structure.*
+
+
+You can with the following command, upload migrations and / or seeds to a remote host with `php artisan dbe:remote remoteName [--migrations] [--seeds]`
+
+For instance **to upload the migrations to the production server:**
+
+```
+php artisan dbe:remote production --migrations
+```
+Or **upload the seeds to the production server:**
+
+```
+php artisan dbe:remote production --seeds
+```
+Or even combine the two:
+
+```
+php artisan dbe:remote production --migrations --seeds
+```
+
 ***
 
 ### From a controller / route
@@ -81,7 +111,6 @@ php artisan dbe:seeds
 Make a export route on your development environment
 
 ```
-<?php
 
 Route::get('export', function()
 {
@@ -92,7 +121,6 @@ Route::get('export', function()
 ##### Export a custom database
 
 ```
-<?php 
 
 Route::get('export', function()
 {
@@ -102,12 +130,10 @@ Route::get('export', function()
 
 #### Database to seed
 
-**This is still in testing phase. Use with care.**
 
 This will write a seeder class with all the data of the current database.
 
 ```
-<?php 
 
 Route::get('exportSeed', function()
 {
@@ -150,16 +176,17 @@ DbExportHandler::ignore('tableToIgnore')->seed();
 
 
 ## TODO
-* ~~Export data too. It would be cool if it could also generate a seed file based of the data in the tables. This would be more usefull to run on the production server to get the seed on the development server.~~ **Done.**
-* Deploy the migration directly to the production server ready to be migrated. (as an option)
-* ~~Make commands to do the same thing (export db to migration)~~
-* Make commands to do the same thing (export db to seed)
+* ~~Export data too. It would be cool if it could also generate a seed file based of the data in the tables. This would be more usefull to run on the production server to get the seed on the development server.~~ **3/1/13**
+* ~~Deploy the migration directly to the production server ready to be migrated. (as an option)~~ **5/1/13**
+* ~~Make commands to do the same thing (export db to migration)~~ **4/1/13**
+* ~~Make commands to do the same thing (export db to seed)~~ **4/1/13**
+* Making the upload to remote available directly when generating the migrations/seeds
 
 
 
 
 ## Credits
-Credits to **@michaeljcalkins** for the [original class](http://paste.laravel.com/1jdw#4) on paste.laravel.com. Sadly I couldn't get it working as-is, so I debugged it and decided to make a package out of it.
+Credits to **@michaeljcalkins** for the [original class](http://paste.laravel.com/1jdw#4) on paste.laravel.com (which goal was to generate migrations from a database). Sadly I couldn't get it working as-is, so I debugged it and decided to make a package out of it, and added a couple a features of my own.
 
 ## License (MIT)
 

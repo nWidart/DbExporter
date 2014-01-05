@@ -91,9 +91,11 @@ class DbExportHandlerServiceProvider extends ServiceProvider
     {
         $this->registerMigrationsCommand();
         $this->registerSeedsCommand();
+        $this->registerRemoteCommand();
         $this->commands(
             'dbe::migrations',
-            'dbe::seeds'
+            'dbe::seeds',
+            'dbe::remote'
         );
     }
 
@@ -116,6 +118,14 @@ class DbExportHandlerServiceProvider extends ServiceProvider
         $this->app['dbe::seeds'] = $this->app->share(function($app)
         {
             return new Commands\SeedGeneratorCommand($this->handler);
+        });
+    }
+
+    protected function registerRemoteCommand()
+    {
+        $this->app['dbe::remote'] = $this->app->share(function($app)
+        {
+            return new Commands\CopyToRemoteCommand;
         });
     }
 

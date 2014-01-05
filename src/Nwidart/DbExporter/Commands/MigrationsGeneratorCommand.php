@@ -59,10 +59,7 @@ class MigrationsGeneratorCommand extends GeneratorCommand
         }
 
         // Symfony style block messages
-        $formatter = $this->getHelperSet()->get('formatter');
-        $errorMessages = array('Success!', 'Database migrations generated in: ' . $this->handler->getMigrationsFilePath());
-        $formattedBlock = $formatter->formatBlock($errorMessages, 'info', true);
-        $this->line($formattedBlock);
+        $this->blockMessage('Success!', 'Database migrations generated in: ' . $this->handler->getMigrationsFilePath());
     }
 
     protected function getArguments()

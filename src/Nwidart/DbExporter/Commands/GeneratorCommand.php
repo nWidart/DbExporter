@@ -26,4 +26,23 @@ class GeneratorCommand extends Command
 
         return $database['database'];
     }
+
+    protected function blockMessage($title, $message, $style = 'info')
+    {
+        // Symfony style block messages
+        $formatter = $this->getHelperSet()->get('formatter');
+        $errorMessages = array($title, $message);
+        $formattedBlock = $formatter->formatBlock($errorMessages, $style, true);
+        $this->line($formattedBlock);
+    }
+
+    protected function sectionMessage($title, $message)
+    {
+        $formatter = $this->getHelperSet()->get('formatter');
+        $formattedLine = $formatter->formatSection(
+            $title,
+            $message
+        );
+        $this->line($formattedLine);
+    }
 }
