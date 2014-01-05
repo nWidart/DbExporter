@@ -98,7 +98,7 @@ class CopyToRemoteCommand extends GeneratorCommand
         $progress = $this->getHelperSet()->get('progress');
         $filesCount = count($dir) - count($this->ignoredFiles);
         $progress->start($this->output, $filesCount);
-
+        $this->info(ucfirst($what));
         foreach($dir as $file) {
             if (in_array($file, $this->ignoredFiles)) {
                 continue;
