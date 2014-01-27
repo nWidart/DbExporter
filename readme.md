@@ -172,7 +172,7 @@ By default the migrations table is ignored. You can add tabled to ignore with th
 DbExportHandler::ignore('tableToIgnore')->migrate();
 DbExportHandler::ignore('tableToIgnore')->seed();
 ```
-You can also send an array of tables to ignore.
+You can also pass an array of tables to ignore.
 
 
 

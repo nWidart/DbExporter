@@ -19,6 +19,7 @@ abstract class DbExporter
      * @var array $ignore
      */
     public static $ignore = array('migrations');
+    public static $remote;
 
     /**
      * Get all the tables
