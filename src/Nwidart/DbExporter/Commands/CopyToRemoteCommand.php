@@ -1,5 +1,6 @@
 <?php namespace Nwidart\DbExporter\Commands;
 
+use Nwidart\DbExporter\Server;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use SSH;
