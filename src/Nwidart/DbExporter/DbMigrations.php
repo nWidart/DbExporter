@@ -184,7 +184,7 @@ class DbMigrations extends DbExporter
         $template = File::get(__DIR__ . '/templates/migration.txt');
 
         // Replace the classname
-        $template = str_replace('{{name}}', "Create_" . Str::title($this->database) . "_Database", $template);
+        $template = str_replace('{{name}}', "Create" . Str::title($this->database) . "Database", $template);
 
         // Replace the up and down values
         $template = str_replace('{{up}}', $upSchema, $template);
