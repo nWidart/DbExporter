@@ -109,6 +109,9 @@ class DbMigrations extends DbExporter
                     case 'int' :
                         $method = 'integer';
                         break;
+                    case 'bigint' :
+                        $method = 'bigInteger';
+                        break;
                     case 'char' :
                     case 'varchar' :
                         $para = strpos($values->Type, '(');
