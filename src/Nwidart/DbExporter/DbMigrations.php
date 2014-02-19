@@ -143,11 +143,23 @@ class DbMigrations extends DbExporter
                     case 'datetime' :
                         $method = 'dateTime';
                         break;
+                    case 'longtext' :
+                        $method = 'longText';
+                        break;
                     case 'mediumtext' :
-                        $method = 'mediumtext';
+                        $method = 'mediumText';
                         break;
                     case 'text' :
                         $method = 'text';
+                        break;
+                    case 'blob' :
+                        $method = 'binary';
+                        break;
+                    case 'enum' :
+                        $method = 'enum';
+                        $para = strpos($values->Type, '('); # 4
+                        $options = substr($values->Type, $para + 1, -1);
+                        $numbers = ', array(' . $options . ')';
                         break;
                 }
 
