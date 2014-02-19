@@ -1,3 +1,5 @@
+[![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/nWidart/DbExporter/badges/quality-score.png?s=7bd2e14ca4097b979efa1d0d558c3ae17dd870bf)](https://scrutinizer-ci.com/g/nWidart/DbExporter/)
+
 # Database Exporter
 
 Export your database quickly and easely as a Laravel Migration and all the data as a Seeder class. This can be done via artisan commands or a controller action.
@@ -161,7 +163,7 @@ Or with:
 ```
 DbExportHandler::migrateAndSeed();
 ```
-**!! Important :** Please note you cannot set a external seed database. 
+**!! Important :** Please note you cannot set a external seed database.
 If you know of a way to connect to a external DB with laravel without writing in the app/database.php file [let me know](http://www.twitter.com/nicolaswidart).
 
 
