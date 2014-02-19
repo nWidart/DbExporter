@@ -93,8 +93,13 @@ class DbMigrations extends DbExporter
 
             $down = "Schema::drop('{$value['table_name']}');";
             $up = "Schema::create('{$value['table_name']}', function($" . "table) {\n";
-            $tableDescribes = $this->getTableDescribes($value['table_name']);
 
+            $tableIndexes = $this->getTableIndexes($value['table_name']);
+            foreach ($tableIndexes as $index) {
+                $up .= '                $' . "table->index('" . $index['Key_name'] . "');\n";
+            }
+
+            $tableDescribes = $this->getTableDescribes($value['table_name']);
             // Loop over the tables fields
             foreach ($tableDescribes as $values) {
                 $method = "";
