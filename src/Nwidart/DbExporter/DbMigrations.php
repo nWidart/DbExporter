@@ -132,9 +132,13 @@ class DbMigrations extends DbExporter
                         $method = 'boolean';
                         break;
                     case 'date' :
-                    case 'timestamp' :
-                    case 'datetime' :
                         $method = 'date';
+                        break;
+                    case 'timestamp' :
+                        $method = 'timestamp';
+                        break;
+                    case 'datetime' :
+                        $method = 'dateTime';
                         break;
                     case 'mediumtext' :
                         $method = 'mediumtext';
