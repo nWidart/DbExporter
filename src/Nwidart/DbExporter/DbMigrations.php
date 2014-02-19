@@ -118,6 +118,11 @@ class DbMigrations extends DbExporter
                     case 'float' :
                         $method = 'float';
                         break;
+                    case 'double' :
+                        $para = strpos($values->Type, '('); # 6
+                        $numbers = ", " . substr($values->Type, $para + 1, -1);
+                        $method = 'double';
+                        break;
                     case 'decimal' :
                         $para = strpos($values->Type, '(');
                         $numbers = ", " . substr($values->Type, $para + 1, -1);
@@ -126,6 +131,7 @@ class DbMigrations extends DbExporter
                     case 'tinyint' :
                         $method = 'boolean';
                         break;
+                    case 'date' :
                     case 'timestamp' :
                     case 'datetime' :
                         $method = 'date';
