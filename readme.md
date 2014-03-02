@@ -2,7 +2,7 @@
 
 # Database Exporter
 
-Export your database quickly and easely as a Laravel Migration and all the data as a Seeder class. This can be done via artisan commands or a controller action.
+Export your database quickly and easily as a Laravel Migration and all the data as a Seeder class. This can be done via artisan commands or a controller action.
 
 ## Installation
 

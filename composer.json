@@ -1,6 +1,6 @@
 {
     "name": "nwidart/db-exporter",
-    "description": "Export your database quickly and easely as a Laravel Migration and all the data as a Seeder class.",
+    "description": "Export your database quickly and easily as a Laravel Migration and all the data as a Seeder class.",
     "keywords": ["Export", "PHP", "Database", "Migrations", "Laravel", "Seed", "Command", "Artisan"],
     "license": "MIT",
     "authors": [
