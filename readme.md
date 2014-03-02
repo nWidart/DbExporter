@@ -13,7 +13,7 @@ Add `"nwidart/db-exporter"`* as a requirement to `composer.json`:
     ...
     "require": {
         ...
-		"nwidart/db-exporter": "0.5"
+		"nwidart/db-exporter": "dev-master"
     },
 }
 
