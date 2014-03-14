@@ -125,7 +125,7 @@ class DbExportHandlerServiceProvider extends ServiceProvider
     {
         $this->app['dbe::remote'] = $this->app->share(function($app)
         {
-            return new Commands\CopyToRemoteCommand;
+            return new Commands\CopyToRemoteCommand(new Server);
         });
     }
 

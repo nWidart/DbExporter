@@ -92,4 +92,11 @@ class DbExportHandler
         return DbMigrations::$filePath;
     }
 
+    public function uploadTo($remote)
+    {
+        DbExporter::$remote = $remote;
+
+        return $this;
+    }
+
 }

@@ -1,5 +1,6 @@
 <?php namespace Nwidart\DbExporter\Commands;
 
+use Nwidart\DbExporter\Server;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use SSH;
@@ -18,13 +19,17 @@ class CopyToRemoteCommand extends GeneratorCommand
     protected $uploadedFiles;
     protected $commandOptions;
 
-    public function __construct()
+    protected $server;
+
+    public function __construct(Server $server)
     {
         parent::__construct();
 
         // Set the paths
         $this->migrationsPath = app_path() . "/database/migrations";
         $this->seedsPath = app_path() . "/database/seeds";
+
+        $this->server = $server;
     }
 
     public function fire()
@@ -73,10 +78,11 @@ class CopyToRemoteCommand extends GeneratorCommand
         $options = $this->option();
         switch ($options) {
             case (($options['seeds'] === true) and ($options['migrations'] === true)):
-                $this->upload('migrations');
+                if (!$this->upload('migrations')) return false;
                 return $this->upload('seeds');
                 break;
             case $options['migrations'] === true:
+                // // $this->server->upload('migrations');
                 $this->commandOptions = 'migrations';
                 return $this->upload('migrations');
                 break;
