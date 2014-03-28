@@ -114,6 +114,9 @@ class DbMigrations extends DbExporter
                     case 'int' :
                         $method = 'integer';
                         break;
+                    case 'smallint' :
+                        $method = 'smallInteger';
+                        break;
                     case 'bigint' :
                         $method = 'bigInteger';
                         break;
