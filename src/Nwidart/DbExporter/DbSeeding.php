@@ -10,7 +10,7 @@
 
 namespace Nwidart\DbExporter;
 
-use DB, Str, File;
+use Config, DB, Str, File;
 
 class DbSeeding extends DbExporter
 {
