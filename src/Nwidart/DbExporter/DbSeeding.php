@@ -53,7 +53,7 @@ class DbSeeding extends DbExporter
 
         $filename = Str::camel($this->database) . "TableSeeder";
 
-        file_put_contents(app_path() . "/database/seeds/{$filename}.php", $seed);
+        file_put_contents(Config::get('db-exporter::export_path.seeds')."{$filename}.php", $seed);
     }
 
     /**
