@@ -11,6 +11,7 @@
 namespace Nwidart\DbExporter;
 
 use DB;
+use Config;
 use File;
 use Nwidart\DbExporter\Exceptions\InvalidDatabaseException;
 use Str;
@@ -62,9 +63,9 @@ class DbMigrations extends DbExporter
 
         $schema = $this->compile();
         $filename = date('Y_m_d_His') . "_create_" . $this->database . "_database.php";
-        self::$filePath = "app/database/migrations/{$filename}";
+        self::$filePath = Config::get('db-exporter::export_path.migrations')."{$filename}";
 
-        file_put_contents(app_path() . "/database/migrations/{$filename}", $schema);
+        file_put_contents(self::$filePath."{$filename}", $schema);
 
        /* if (!empty(self::$remote)) {
             // Artisan::call('migrate', ['--path'=> "app/database/migrations"]);
