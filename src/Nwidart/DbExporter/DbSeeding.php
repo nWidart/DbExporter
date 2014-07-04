@@ -87,6 +87,8 @@ class DbSeeding extends DbExporter
                 $insertStub .= "
             array(\n";
                 foreach ($obj as $prop => $value) {
+                    $prop = addslashes($prop);
+                    $value = addslashes($value);
                     if (is_numeric($value)) {
                         $insertStub .= "                '{$prop}' => {$value},\n";
                     } else {
