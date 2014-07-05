@@ -3,14 +3,17 @@
  * DbExporter.
  *
  * @User nicolaswidart
- * @Date 3/01/14
- * @Time 20:44
+ * @Date 2/01/14
+ * @Time 14:21
  *
  */
 
 namespace Nwidart\DbExporter;
 
 use DB;
+use File;
+use Nwidart\DbExporter\Exceptions\InvalidDatabaseException;
+use Str;
 
 abstract class DbExporter
 {

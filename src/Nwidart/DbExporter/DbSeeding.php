@@ -51,7 +51,7 @@ class DbSeeding extends DbExporter
 
         $seed = $this->compile();
 
-        $filename = Str::camel($this->database) . "TableSeeder";
+        $filename = date('Y_m_d_His_') . Str::camel($this->database) . "TableSeeder";
 
         file_put_contents(Config::get('db-exporter::export_path.seeds')."{$filename}.php", $seed);
     }
@@ -87,6 +87,8 @@ class DbSeeding extends DbExporter
                 $insertStub .= "
             array(\n";
                 foreach ($obj as $prop => $value) {
+                    $prop = addslashes($prop);
+                    $value = addslashes($value);
                     if (is_numeric($value)) {
                         $insertStub .= "                '{$prop}' => {$value},\n";
                     } else {
