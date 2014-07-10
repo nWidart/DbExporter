@@ -1,6 +1,5 @@
 <?php namespace Nwidart\DbExporter;
 
-use DB;
 use Config;
 use File;
 use Nwidart\DbExporter\Exceptions\InvalidDatabaseException;

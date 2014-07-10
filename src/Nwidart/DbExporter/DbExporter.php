@@ -1,8 +1,6 @@
 <?php namespace Nwidart\DbExporter;
 
 use DB;
-use File;
-use Str;
 
 abstract class DbExporter
 {

@@ -2,10 +2,6 @@
 
 
 use Nwidart\DbExporter\DbExportHandler;
-use Nwidart\DbExporter\DbExporter;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-use Config;
 
 class SeedGeneratorCommand extends GeneratorCommand
 {
