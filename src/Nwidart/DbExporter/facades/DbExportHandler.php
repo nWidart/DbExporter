@@ -1,14 +1,4 @@
-<?php
-/**
- * DbExporter.
- *
- * @User nicolaswidart
- * @Date 3/01/14
- * @Time 13:21
- *
- */
-
-namespace Nwidart\DbExporter\Facades;
+<?php namespace Nwidart\DbExporter\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

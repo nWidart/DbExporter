@@ -1,18 +1,7 @@
-<?php
-/**
- * DbExporter.
- *
- * @User nicolaswidart
- * @Date 2/01/14
- * @Time 14:21
- *
- */
-
-namespace Nwidart\DbExporter;
+<?php namespace Nwidart\DbExporter;
 
 use DB;
 use File;
-use Nwidart\DbExporter\Exceptions\InvalidDatabaseException;
 use Str;
 
 abstract class DbExporter

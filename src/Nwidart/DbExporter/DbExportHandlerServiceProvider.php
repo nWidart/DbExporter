@@ -1,14 +1,4 @@
-<?php
-/**
- * DbExporter.
- *
- * @User nicolaswidart
- * @Date 3/01/14
- * @Time 13:19
- *
- */
-
-namespace Nwidart\DbExporter;
+<?php namespace Nwidart\DbExporter;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Config;
@@ -104,7 +94,7 @@ class DbExportHandlerServiceProvider extends ServiceProvider
      */
     protected function registerMigrationsCommand()
     {
-        $this->app['dbe::migrations'] = $this->app->share(function($app)
+        $this->app['dbe::migrations'] = $this->app->share(function()
         {
             return new Commands\MigrationsGeneratorCommand($this->handler);
         });
@@ -115,7 +105,7 @@ class DbExportHandlerServiceProvider extends ServiceProvider
      */
     protected function registerSeedsCommand()
     {
-        $this->app['dbe::seeds'] = $this->app->share(function($app)
+        $this->app['dbe::seeds'] = $this->app->share(function()
         {
             return new Commands\SeedGeneratorCommand($this->handler);
         });
@@ -123,7 +113,7 @@ class DbExportHandlerServiceProvider extends ServiceProvider
 
     protected function registerRemoteCommand()
     {
-        $this->app['dbe::remote'] = $this->app->share(function($app)
+        $this->app['dbe::remote'] = $this->app->share(function()
         {
             return new Commands\CopyToRemoteCommand(new Server);
         });
@@ -134,7 +124,7 @@ class DbExportHandlerServiceProvider extends ServiceProvider
      */
     protected function registerDbExportHandler()
     {
-        $this->app['DbExportHandler'] = $this->app->share(function($app)
+        $this->app['DbExportHandler'] = $this->app->share(function()
         {
             return $this->handler;
         });

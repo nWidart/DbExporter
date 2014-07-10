@@ -1,14 +1,4 @@
-<?php
-/**
- * DbExporter.
- *
- * @User nicolaswidart
- * @Date 4/01/14
- * @Time 10:57
- *
- */
-
-namespace Nwidart\DbExporter\Commands;
+<?php namespace Nwidart\DbExporter\Commands;
 
 use Nwidart\DbExporter\DbExporter;
 use Nwidart\DbExporter\DbExportHandler;

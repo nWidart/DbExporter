@@ -1,14 +1,4 @@
-<?php
-/**
- * DbExporter.
- *
- * @User nicolaswidart
- * @Date 2/01/14
- * @Time 14:21
- *
- */
-
-namespace Nwidart\DbExporter;
+<?php namespace Nwidart\DbExporter;
 
 use DB;
 use Config;
@@ -186,7 +176,7 @@ class DbMigrations extends DbExporter
                 	$up .= '                $' . "table->index('" . $index['Key_name'] . "');\n";
             	}
         	}
-            
+
             $up .= "            });\n\n";
 
             $this->schema[$value['table_name']] = array(
@@ -220,7 +210,7 @@ class DbMigrations extends DbExporter
 	     * Table: {$name}
 	     */
 	    {$values['up']}";
-	
+
 	            $downSchema .= "
 	            {$values['down']}";
 	        }
