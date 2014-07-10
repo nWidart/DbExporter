@@ -56,12 +56,6 @@ class DbMigrations extends DbExporter
 
         file_put_contents(self::$filePath."{$filename}", $schema);
 
-       /* if (!empty(self::$remote)) {
-            // Artisan::call('migrate', ['--path'=> "app/database/migrations"]);
-
-            \Artisan::call('dbe:migrations', array('--migrations'));
-        }*/
-
         return self::$filePath;
     }
 
