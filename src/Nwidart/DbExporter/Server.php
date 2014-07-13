@@ -1,6 +1,6 @@
 <?php namespace Nwidart\DbExporter;
 
-use Config;
+use Config, SSH;
 
 class Server
 {

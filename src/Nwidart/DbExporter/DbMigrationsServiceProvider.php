@@ -30,7 +30,7 @@ class DbMigrationsServiceProvider extends ServiceProvider {
     public function register()
     {
 
-        $this->app['DbMigrations'] = $this->app->share(function($app)
+        $this->app['DbMigrations'] = $this->app->share(function()
         {
             $connType = Config::get('database.default');
             $database = Config::get('database.connections.' .$connType );

@@ -1,21 +1,7 @@
-<?php
-/**
- * DbExporter.
- *
- * @User nicolaswidart
- * @Date 4/01/14
- * @Time 12:32
- *
- */
-
-namespace Nwidart\DbExporter\Commands;
+<?php namespace Nwidart\DbExporter\Commands;
 
 
 use Nwidart\DbExporter\DbExportHandler;
-use Nwidart\DbExporter\DbExporter;
-use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Input\InputArgument;
-use Config;
 
 class SeedGeneratorCommand extends GeneratorCommand
 {

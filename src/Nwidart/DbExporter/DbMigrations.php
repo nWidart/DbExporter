@@ -1,16 +1,5 @@
-<?php
-/**
- * DbExporter.
- *
- * @User nicolaswidart
- * @Date 2/01/14
- * @Time 14:21
- *
- */
+<?php namespace Nwidart\DbExporter;
 
-namespace Nwidart\DbExporter;
-
-use DB;
 use Config;
 use File;
 use Nwidart\DbExporter\Exceptions\InvalidDatabaseException;
@@ -66,12 +55,6 @@ class DbMigrations extends DbExporter
         self::$filePath = Config::get('db-exporter::export_path.migrations')."{$filename}";
 
         file_put_contents(self::$filePath."{$filename}", $schema);
-
-       /* if (!empty(self::$remote)) {
-            // Artisan::call('migrate', ['--path'=> "app/database/migrations"]);
-
-            \Artisan::call('dbe:migrations', array('--migrations'));
-        }*/
 
         return self::$filePath;
     }
@@ -186,7 +169,7 @@ class DbMigrations extends DbExporter
                 	$up .= '                $' . "table->index('" . $index['Key_name'] . "');\n";
             	}
         	}
-            
+
             $up .= "            });\n\n";
 
             $this->schema[$value['table_name']] = array(
@@ -220,7 +203,7 @@ class DbMigrations extends DbExporter
 	     * Table: {$name}
 	     */
 	    {$values['up']}";
-	
+
 	            $downSchema .= "
 	            {$values['down']}";
 	        }
