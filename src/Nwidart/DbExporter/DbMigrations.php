@@ -54,7 +54,7 @@ class DbMigrations extends DbExporter
         $filename = date('Y_m_d_His') . "_create_" . $this->database . "_database.php";
         self::$filePath = Config::get('db-exporter::export_path.migrations')."{$filename}";
 
-        file_put_contents(self::$filePath."{$filename}", $schema);
+        file_put_contents(self::$filePath, $schema);
 
         return self::$filePath;
     }
