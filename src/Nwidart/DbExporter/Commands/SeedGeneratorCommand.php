@@ -1,7 +1,7 @@
 <?php namespace Nwidart\DbExporter\Commands;
 
 
-use Nwidart\DbExporter\DbExportHandler;
+use Nwidart\DbExporter\DbExportHandler, Str, Config;
 
 class SeedGeneratorCommand extends GeneratorCommand
 {
@@ -29,7 +29,11 @@ class SeedGeneratorCommand extends GeneratorCommand
 
         // Symfony style block messages
         $formatter = $this->getHelperSet()->get('formatter');
-        $errorMessages = array('Success!', 'Database seed class generated in: ');
+
+        $filename = Str::camel($this->getDatabaseName()) . "TableSeeder";
+        $filename = Config::get('db-exporter::export_path.seeds')."{$filename}.php";
+
+        $errorMessages = array('Success!', "Database seed class generated in: {$filename}");
         $formattedBlock = $formatter->formatBlock($errorMessages, 'info', true);
         $this->line($formattedBlock);
     }
