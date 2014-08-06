@@ -9,12 +9,12 @@ Export your database quickly and easily as a Laravel Migration and all the data 
 
 Add `"nwidart/db-exporter"`* as a requirement to `composer.json`:
 
-```
+```php
 {
     ...
     "require": {
         ...
-		"nwidart/db-exporter": "dev-master"
+		"nwidart/db-exporter": "0.6"
     },
 }
 
@@ -28,7 +28,7 @@ $ php composer.phar update
 
 Add the service provider to `app/config/app.php`:
 
-```
+```php
 'Nwidart\DbExporter\DbExportHandlerServiceProvider'
 ```
 
@@ -113,7 +113,7 @@ php artisan dbe:remote production --migrations --seeds
 
 Make a export route on your development environment
 
-```
+```php
 
 Route::get('export', function()
 {
@@ -123,7 +123,7 @@ Route::get('export', function()
 
 ##### Export a custom database
 
-```
+```php
 
 Route::get('export', function()
 {
@@ -136,16 +136,20 @@ Route::get('export', function()
 
 This will write a seeder class with all the data of the current database.
 
-```
+```php
 
 Route::get('exportSeed', function()
 {
     DbExportHandler::seed();
 });
 ```
+
 Next all you have to do is add the call method on the base seed class:
-```
+
+```php
+
 $this->call('nameOfYourSeedClass');
+
 ```
 
 Now you can run from the commmand line:
@@ -156,13 +160,17 @@ Now you can run from the commmand line:
 #### Chaining
 You can also combine the generation of the migrations & the seed:
 
-```
+```php
+
 DbExportHandler::migrate()->seed();
+
 ```
 Or with:
 
-```
+```php
+
 DbExportHandler::migrateAndSeed();
+
 ```
 **!! Important :** Please note you cannot set a external seed database.
 If you know of a way to connect to a external DB with laravel without writing in the app/database.php file [let me know](http://www.twitter.com/nicolaswidart).
@@ -171,9 +179,11 @@ If you know of a way to connect to a external DB with laravel without writing in
 #### Ignoring tables
 By default the migrations table is ignored. You can add tabled to ignore with the following syntax:
 
-```
+```php
+
 DbExportHandler::ignore('tableToIgnore')->migrate();
 DbExportHandler::ignore('tableToIgnore')->seed();
+
 ```
 You can also pass an array of tables to ignore.
 
