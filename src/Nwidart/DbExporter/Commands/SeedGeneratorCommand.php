@@ -1,7 +1,9 @@
 <?php namespace Nwidart\DbExporter\Commands;
 
-
-use Nwidart\DbExporter\DbExportHandler, Str, Config;
+use Nwidart\DbExporter\DbExporter;
+use Nwidart\DbExporter\DbExportHandler;
+use Symfony\Component\Console\Input\InputOption;
+use Config, Str;
 
 class SeedGeneratorCommand extends GeneratorCommand
 {
@@ -25,7 +27,18 @@ class SeedGeneratorCommand extends GeneratorCommand
     {
         $this->comment("Preparing the seeder class for database {$this->getDatabaseName()}");
 
-        $this->handler->seed();
+        // Grab the options
+        $ignore = $this->option('ignore');
+
+        if (empty($ignore)) {
+            $this->handler->seed();
+        } else {
+            $tables = explode(',', str_replace(' ', '', $ignore));
+            $this->handler->ignore($tables)->seed();
+            foreach (DbExporter::$ignore as $table) {
+                $this->comment("Ignoring the {$table} table");
+            }
+        }
 
         // Symfony style block messages
         $formatter = $this->getHelperSet()->get('formatter');
@@ -42,4 +55,12 @@ class SeedGeneratorCommand extends GeneratorCommand
         $filename = Str::camel($this->getDatabaseName()) . "TableSeeder";
         return Config::get('db-exporter::export_path.seeds')."{$filename}.php";
     }
+
+    protected function getOptions()
+    {
+        return array(
+            array('ignore', 'ign', InputOption::VALUE_REQUIRED, 'Ignore tables to export, seperated by a comma', null)
+        );
+    }
+
 }
