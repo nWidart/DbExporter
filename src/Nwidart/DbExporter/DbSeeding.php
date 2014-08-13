@@ -70,7 +70,6 @@ class DbSeeding extends DbExporter
             }
             $tableName = $value['table_name'];
             $tableData = $this->getTableData($value['table_name']);
-
             $insertStub = "";
 
             foreach ($tableData as $obj) {
@@ -96,12 +95,8 @@ class DbSeeding extends DbExporter
             if (count($tableData) > 1) {
                 $stub .= "
         DB::table('" . $tableName . "')->insert(array(
-                    ".$insertStub."
+            {$insertStub}
         ));";
-            } else {
-                $stub .= "DB::table('" . $tableName . "')->insert(
-                    ".$insertStub."
-        );";
             }
         }
 
