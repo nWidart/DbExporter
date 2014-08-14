@@ -92,7 +92,7 @@ class DbSeeding extends DbExporter
                 }
             }
 
-            if (count($tableData) > 1) {
+            if (count($tableData) >= 1) {
                 $stub .= "
         DB::table('" . $tableName . "')->insert(array(
             {$insertStub}
