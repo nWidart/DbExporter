@@ -38,7 +38,7 @@ Add the service provider to `app/config/app.php`:
 php artisan config:publish nwidart/db-exporter
 ```
 
-**Use `dev-master` as version requirement to be on the cutting edge*
+*Use `dev-master` as version requirement to be on the cutting edge*
 
 
 ## Documentation
@@ -77,9 +77,9 @@ php artisan dbe:seeds
 
 
 #### Uploading migrations/seeds to remote server
-**!! Important** *This requires your app/config/remote.php to be configured. *
+**Important: This requires your app/config/remote.php to be configured.**
 
-**!! Important** *The package configuration **remote** key needs to be configured to correspond to your remotes directory structure.*
+**Important: The package configuration remote key needs to be configured to correspond to your remotes directory structure.**
 
 
 You can with the following command, upload migrations and / or seeds to a remote host with `php artisan dbe:remote remoteName [--migrations] [--seeds]`
@@ -172,7 +172,7 @@ Or with:
 DbExportHandler::migrateAndSeed();
 
 ```
-**!! Important :** Please note you cannot set a external seed database.
+**Important :** Please note you cannot set a external seed database.
 If you know of a way to connect to a external DB with laravel without writing in the app/database.php file [let me know](http://www.twitter.com/nicolaswidart).
 
 
