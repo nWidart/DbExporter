@@ -76,13 +76,7 @@ class DbSeeding extends DbExporter
                 $insertStub .= "
             array(\n";
                 foreach ($obj as $prop => $value) {
-                    $prop = addslashes($prop);
-                    $value = addslashes($value);
-                    if (is_numeric($value)) {
-                        $insertStub .= "                '{$prop}' => {$value},\n";
-                    } else {
-                        $insertStub .= "                '{$prop}' => '{$value}',\n";
-                    }
+                    $insertStub .= $this->insertPropertyAndValue($prop, $value);
                 }
 
                 if (count($tableData) > 1) {
@@ -119,5 +113,18 @@ class DbSeeding extends DbExporter
         $template = str_replace('{{run}}', $this->seedingStub, $template);
 
         return $template;
+    }
+
+    private function insertPropertyAndValue($prop, $value)
+    {
+        $prop = addslashes($prop);
+        $value = addslashes($value);
+        if (is_numeric($value)) {
+            return "                '{$prop}' => {$value},\n";
+        } elseif($value == '') {
+            return "                '{$prop}' => NULL,\n";
+        } else {
+            return "                '{$prop}' => '{$value}',\n";
+        }
     }
 }
