@@ -86,7 +86,7 @@ class DbSeeding extends DbExporter
                 }
             }
 
-            if (count($tableData) >= 1) {
+            if ($this->hasTableData($tableData)) {
                 $stub .= "
         DB::table('" . $tableName . "')->insert(array(
             {$insertStub}
@@ -126,5 +126,14 @@ class DbSeeding extends DbExporter
         } else {
             return "                '{$prop}' => '{$value}',\n";
         }
+    }
+
+    /**
+     * @param $tableData
+     * @return bool
+     */
+    public function hasTableData($tableData)
+    {
+        return count($tableData) >= 1;
     }
 }
