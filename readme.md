@@ -5,6 +5,9 @@
 
 Export your database quickly and easily as a Laravel Migration and all the data as a Seeder class. This can be done via artisan commands or a controller action.
 
+
+Please note that I've only tested this package on a **MySQL** database. It has been confirmed it does not work with [Postgres](https://github.com/nWidart/DbExporter/issues/17#issuecomment-56990481).
+
 ## Installation
 
 Add `"nwidart/db-exporter"`* as a requirement to `composer.json`:
