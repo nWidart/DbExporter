@@ -145,6 +145,7 @@ class DbMigrations extends DbExporter
                     case 'text' :
                         $method = 'text';
                         break;
+                    case 'longblob':
                     case 'blob' :
                         $method = 'binary';
                         break;
