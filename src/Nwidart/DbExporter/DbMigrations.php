@@ -13,7 +13,7 @@ namespace Nwidart\DbExporter;
 use DB;
 use File;
 use Nwidart\DbExporter\Exceptions\InvalidDatabaseException;
-use Str;
+use Illuminate\Support\Str;
 
 class DbMigrations extends DbExporter
 {
@@ -62,9 +62,9 @@ class DbMigrations extends DbExporter
 
         $schema = $this->compile();
         $filename = date('Y_m_d_His') . "_create_" . $this->database . "_database.php";
-        self::$filePath = "app/database/migrations/{$filename}";
+        self::$filePath = "database/migrations/{$filename}";
 
-        file_put_contents(app_path() . "/database/migrations/{$filename}", $schema);
+        file_put_contents(base_path() . "/database/migrations/{$filename}", $schema);
 
        /* if (!empty(self::$remote)) {
             // Artisan::call('migrate', ['--path'=> "app/database/migrations"]);
@@ -190,7 +190,7 @@ class DbMigrations extends DbExporter
         $template = File::get(__DIR__ . '/templates/migration.txt');
 
         // Replace the classname
-        $template = str_replace('{{name}}', "Create_" . Str::title($this->database) . "_Database", $template);
+        $template = str_replace('{{name}}', "Create" . Str::studly($this->database) . "Database", $template);
 
         // Replace the up and down values
         $template = str_replace('{{up}}', $upSchema, $template);
