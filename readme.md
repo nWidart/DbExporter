@@ -1,5 +1,5 @@
 [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/nWidart/DbExporter/badges/quality-score.png?s=7bd2e14ca4097b979efa1d0d558c3ae17dd870bf)](https://scrutinizer-ci.com/g/nWidart/DbExporter/)
-[![Latest Stable Version](https://poser.pugx.org/nwidart/db-exporter/v/stable.svg)](https://packagist.org/packages/nwidart/db-exporter) [![Total Downloads](https://poser.pugx.org/nwidart/db-exporter/downloads.svg)](https://packagist.org/packages/nwidart/db-exporter) [![Latest Unstable Version](https://poser.pugx.org/nwidart/db-exporter/v/unstable.svg)](https://packagist.org/packages/nwidart/db-exporter) [![License](https://poser.pugx.org/nwidart/db-exporter/license.svg)](https://packagist.org/packages/nwidart/db-exporter)
+[![Latest Stable Version](https://poser.pugx.org/nwidart/db-exporter/v/stable.svg)](https://packagist.org/packages/nwidart/db-exporter) [![Total Downloads](https://poser.pugx.org/nwidart/db-exporter/d/total)](https://packagist.org/packages/nwidart/db-exporter) [![Latest Unstable Version](https://poser.pugx.org/nwidart/db-exporter/v/unstable.svg)](https://packagist.org/packages/nwidart/db-exporter) [![License](https://poser.pugx.org/nwidart/db-exporter/license.svg)](https://packagist.org/packages/nwidart/db-exporter)
 
 # Database Exporter
 
