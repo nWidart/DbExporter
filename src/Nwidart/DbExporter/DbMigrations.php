@@ -52,7 +52,7 @@ class DbMigrations extends DbExporter
 
         $schema = $this->compile();
         $filename = date('Y_m_d_His') . "_create_" . $this->database . "_database.php";
-        self::$filePath = Config::get('db-exporter::export_path.migrations')."{$filename}";
+        self::$filePath = config('db-exporter.export_path.migrations')."{$filename}";
 
         file_put_contents(self::$filePath, $schema);
 
@@ -82,7 +82,7 @@ class DbMigrations extends DbExporter
             }
 
             $down = "Schema::drop('{$value['table_name']}');";
-            $up = "Schema::create('{$value['table_name']}', function($" . "table) {\n";
+            $up = "Schema::create('{$value['table_name']}', function(Blueprint $" . "table) {\n";
 
             $tableDescribes = $this->getTableDescribes($value['table_name']);
             // Loop over the tables fields
@@ -92,7 +92,7 @@ class DbMigrations extends DbExporter
                 $type = $para > -1 ? substr($values->Type, 0, $para) : $values->Type;
                 $numbers = "";
                 $nullable = $values->Null == "NO" ? "" : "->nullable()";
-                $default = empty($values->Default) ? "" : "->default(\"{$values->Default}\")";
+                $default = empty($values->Default) ? "" : "->default('".$values->Default."')";
                 $unsigned = strpos($values->Type, "unsigned") === false ? '' : '->unsigned()';
 
                 switch ($type) {
@@ -135,6 +135,9 @@ class DbMigrations extends DbExporter
                         break;
                     case 'datetime' :
                         $method = 'dateTime';
+                        break;
+                    case 'time' :
+                        $method = 'time';
                         break;
                     case 'longtext' :
                         $method = 'longText';

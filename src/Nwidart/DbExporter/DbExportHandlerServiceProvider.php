@@ -24,7 +24,7 @@ class DbExportHandlerServiceProvider extends ServiceProvider
 
     public function boot()
     {
-        $this->package('nwidart/db-exporter');
+        $this->publishes([__DIR__.'/../../config/config.php' => config_path('db-exporter.php')], 'config');
     }
 
     public function register()
@@ -40,6 +40,11 @@ class DbExportHandlerServiceProvider extends ServiceProvider
 
         // Load the alias
         $this->loadAlias();
+
+        // Default config
+        $this->mergeConfigFrom(
+            __DIR__.'/../../config/config.php', 'db-exporter'
+        );
     }
 
     /**
@@ -63,8 +68,8 @@ class DbExportHandlerServiceProvider extends ServiceProvider
      */
     private function getDatabaseName()
     {
-        $connType = Config::get('database.default');
-        $database = Config::get('database.connections.' .$connType );
+        $connType = config('database.default');
+        $database = config('database.connections.' .$connType );
 
         return $database['database'];
     }
@@ -139,6 +144,11 @@ class DbExportHandlerServiceProvider extends ServiceProvider
         {
             $loader = \Illuminate\Foundation\AliasLoader::getInstance();
             $loader->alias('DbExportHandler', 'Nwidart\DbExporter\Facades\DbExportHandler');
+
+            // some users migrating from 5.0 don't have Str alias registered
+            if (! class_exists('\Str')) {
+                $loader->alias('Str',\Illuminate\Support\Str::class);
+            }
         });
     }
 

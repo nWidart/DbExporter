@@ -1,5 +1,7 @@
 <?php
 
+// migrations and seeds paths should have trailing /
+
 return array(
     'remote' => array(
         'name' => 'production',
@@ -7,7 +9,7 @@ return array(
         'seeds' => '/home/htdocs/testing/seeds/'
     ),
     'export_path' => array(
-        'migrations' => app_path().'/database/migrations/',
-        'seeds' => app_path().'/database/seeds/'
+        'migrations' => database_path('migrations').'/',
+        'seeds' => database_path('seeds').'/'
     )
 );

@@ -19,7 +19,7 @@ class Server
         $localPath = "{$what}Path";
 
         $dir = scandir($localPath);
-        $remotePath = Config::get('db-exporter::remote.' . $what);
+        $remotePath = config('db-exporter.remote.' . $what);
 
         foreach($dir as $file) {
             if (in_array($file, $this->ignoredFiles)) {
@@ -42,6 +42,6 @@ class Server
     private function getRemoteName()
     {
         // For now static from he config file.
-        return Config::get('db-exporter::remote.name');
+        return config('db-exporter.remote.name');
     }
 }
