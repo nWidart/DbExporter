@@ -19,7 +19,7 @@ class DbMigrationsServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        $this->package('nwidart/db-exporter');
+        //
     }
 
     /**
@@ -32,8 +32,8 @@ class DbMigrationsServiceProvider extends ServiceProvider {
 
         $this->app['DbMigrations'] = $this->app->share(function()
         {
-            $connType = Config::get('database.default');
-            $database = Config::get('database.connections.' .$connType );
+            $connType = config('database.default');
+            $database = config('database.connections.' .$connType );
             return new DbMigrations($database);
         });
 

@@ -11,8 +11,8 @@ class GeneratorCommand extends Command
      */
     protected function getDatabaseName()
     {
-        $connType = Config::get('database.default');
-        $database = Config::get('database.connections.' .$connType );
+        $connType = config('database.default');
+        $database = config('database.connections.' .$connType );
 
         return $database['database'];
     }

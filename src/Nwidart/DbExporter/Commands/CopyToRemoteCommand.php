@@ -98,7 +98,7 @@ class CopyToRemoteCommand extends GeneratorCommand
         $localPath = "{$what}Path";
 
         $dir = scandir($this->$localPath);
-        $remotePath = Config::get('db-exporter::remote.'.$what);
+        $remotePath = config('db-exporter.remote.'.$what);
 
         // Prepare the progress bar
         $progress = $this->getHelperSet()->get('progress');
