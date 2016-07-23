@@ -10,23 +10,10 @@ Please note that I've only tested this package on a **MySQL** database. It has b
 
 ## Installation
 
-Add `"nwidart/db-exporter"`* as a requirement to `composer.json`:
-
-```php
-{
-    ...
-    "require": {
-        ...
-		"nwidart/db-exporter": "1.0"
-    },
-}
-
 ```
 
-Update composer:
+$ composer require nwidart/db-exporter
 
-```
-$ php composer.phar update
 ```
 
 Add the service provider to `app/config/app.php`:
