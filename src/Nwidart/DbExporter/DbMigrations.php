@@ -51,7 +51,7 @@ class DbMigrations extends DbExporter
         }
 
         $schema = $this->compile();
-        $filename = date('Y_m_d_His') . "_create_" . $this->database . "_database.php";
+        $filename = date('Y_m_d_His') . "_create_" . str_replace('-', '', $this->database) . "_database.php";
         self::$filePath = config('db-exporter.export_path.migrations')."{$filename}";
 
         file_put_contents(self::$filePath, $schema);
@@ -217,7 +217,8 @@ class DbMigrations extends DbExporter
         $template = File::get(__DIR__ . '/templates/migration.txt');
 
         // Replace the classname
-        $template = str_replace('{{name}}', "Create" . Str::title($this->database) . "Database", $template);
+        $classname = str_replace('-', '', Str::title($this->database));
+        $template = str_replace('{{name}}', "Create" . $classname . "Database", $template);
 
         // Replace the up and down values
         $template = str_replace('{{up}}', $upSchema, $template);
