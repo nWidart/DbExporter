@@ -125,7 +125,7 @@ class DbMigrations extends DbExporter
                         $method = 'decimal';
                         break;
                     case 'tinyint' :
-                        $method = 'boolean';
+                        $method = 'tinyInteger';
                         break;
                     case 'date' :
                         $method = 'date';
@@ -152,6 +152,9 @@ class DbMigrations extends DbExporter
                     case 'blob' :
                         $method = 'binary';
                         break;
+                    case 'mediumint' :
+                        $method = 'mediumInteger';
+                        break;
                     case 'enum' :
                         $method = 'enum';
                         $para = strpos($values->Type, '('); # 4
@@ -169,10 +172,10 @@ class DbMigrations extends DbExporter
 
             $tableIndexes = $this->getTableIndexes($value['table_name']);
             if (!is_null($tableIndexes) && count($tableIndexes)){
-            	foreach ($tableIndexes as $index) {
-                	$up .= '                $' . "table->index('" . $index['Key_name'] . "');\n";
-            	}
-        	}
+                foreach ($tableIndexes as $index) {
+                    $up .= '                $' . "table->index('" . $index['Key_name'] . "');\n";
+                }
+            }
 
             $up .= "            });\n\n";
 
@@ -197,20 +200,20 @@ class DbMigrations extends DbExporter
 
         // prevent of failure when no table
         if (!is_null($this->schema) && count($this->schema)) {
-	        foreach ($this->schema as $name => $values) {
-	            // check again for ignored tables
-	            if (in_array($name, self::$ignore)) {
-	                continue;
-	            }
-	            $upSchema .= "
+            foreach ($this->schema as $name => $values) {
+                // check again for ignored tables
+                if (in_array($name, self::$ignore)) {
+                    continue;
+                }
+                $upSchema .= "
 	    /**
 	     * Table: {$name}
 	     */
 	    {$values['up']}";
 
-	            $downSchema .= "
+                $downSchema .= "
 	            {$values['down']}";
-	        }
+            }
         }
 
         // Grab the template
