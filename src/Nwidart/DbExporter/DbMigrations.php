@@ -158,6 +158,9 @@ class DbMigrations extends DbExporter
                         $options = substr($values->Type, $para + 1, -1);
                         $numbers = ', array(' . $options . ')';
                         break;
+                    case 'json' :
+                        $method = 'json';
+                        break;
                 }
 
                 if ($values->Key == 'PRI') {

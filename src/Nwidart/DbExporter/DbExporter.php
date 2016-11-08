@@ -24,7 +24,7 @@ abstract class DbExporter
     public function getTableIndexes($table)
     {
         $pdo = DB::connection()->getPdo();
-        return $pdo->query('SHOW INDEX FROM ' . $table . ' WHERE Key_name != "PRIMARY"');
+        return $pdo->query('SHOW INDEX FROM ' . $this->database . '.' . $table . ' WHERE Key_name != "PRIMARY"');
     }
 
     /**
