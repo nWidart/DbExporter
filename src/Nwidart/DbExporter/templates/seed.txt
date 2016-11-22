@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Database\Seeder;
 class {{className}} extends Seeder {
     public function run()
     {
